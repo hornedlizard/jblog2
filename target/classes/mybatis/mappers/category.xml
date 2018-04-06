@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[
+			insert into category
+			values(null, #{name}, #{memo}, #{blogNo})
+		]]>
+	</insert>
+	
+	<select id="getLast" resultType="categoryvo">
+		<![CDATA[
+			select (select count(*) from category) as no, name, memo, blog_no
+			from category
+			where no = (select max(no) from category)
+		]]>
+	</select>
+
+	<select id="getById" parameterType="map" resultType="categoryvo">
+		<![CDATA[
+			select no, name, memo, blog_no
+			from category
+			where blog_no = (select no from user where id=#{id})
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="categoryvo">
+		<![CDATA[
+			delete from category
+			where no = #{no}
+			and blog_no = #{blogNo}
+		]]>
+	</delete>
+	
+</mapper>
