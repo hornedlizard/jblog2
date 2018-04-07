@@ -1,6 +1,7 @@
 package com.cafe24.jblog2.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(UserVo vo) {
+	public String join(@ModelAttribute @Valid UserVo vo) {
 		uService.join(vo);
 		long userNo = uService.checkId(vo.getId()).getNo();
 		bService.createBlog(userNo);

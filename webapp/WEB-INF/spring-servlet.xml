@@ -72,6 +72,15 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 	
+	<!-- MessageSource: validation 데이터 jsp에서 번역 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	   <property name="basenames">
+	      <list>
+		<value>messages/messages_ko</value>
+	      </list>
+	   </property>
+	</bean>
+	
 	<!-- 빈 설정을 annotation 기반으로 -->
 	<context:annotation-config />
 	<!-- scanning할 기준 패키지 -->

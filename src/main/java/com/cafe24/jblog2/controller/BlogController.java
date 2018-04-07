@@ -35,16 +35,20 @@ public class BlogController {
 	private PostService pService;
 	
 	
-	@RequestMapping("")
+	@RequestMapping(value="")
 	public String blogMain(@PathVariable String id, Model model) {
 		PageVo page = new PageVo();
 		page.setPage(1);
 		int totalData = pService.countData();
 		page.setTotalData(totalData);
 		page.paging();
+		
+		List<CategoryVo> category = cService.listCategory(id);
 		BlogVo blog = service.blogMain(id);
 		long blogNo = service.blogMain(id).getNo();
 		List<PostVo> list = pService.MainPost(blogNo);
+		
+		model.addAttribute("category", category);
 		model.addAttribute("page", page);
 		model.addAttribute("blog", blog);
 		model.addAttribute("posts", list);
@@ -75,17 +79,16 @@ public class BlogController {
 	
 	@RequestMapping(value="/admin/category")
 	public String category(@PathVariable String id, Model model) {
+		BlogVo blog = service.blogMain(id);
+		model.addAttribute("blog", blog);
 		model.addAttribute("list", cService.listCategory(id));
 		return "blog/blog-admin-category";
 	}
 	
-	/*@RequestMapping("/category/list")
-	public List<CategoryVo> listCategory(@PathVariable String id) {
-		return cService.listCategory(id);
-	}*/
-	
 	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 	public String blogWrite(@PathVariable String id, Model model) {
+		BlogVo blog = service.blogMain(id);
+		model.addAttribute("blog", blog);
 		model.addAttribute("list", cService.listCategory(id));
 		
 		return "blog/blog-admin-write";

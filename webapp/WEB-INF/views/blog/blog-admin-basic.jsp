@@ -30,29 +30,13 @@ function imgChange(){
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>${blog.title }</h1>
-			<ul>
-				<c:choose>
-					<c:when test="${empty authUser }">
-						<li><a href="${pageContext.servletContext.contextPath }/user/login">로그인</a></li>
-						<li><a href="${pageContext.servletContext.contextPath }/user/join">회원가입</a></li>
-						<li><a href="${pageContext.servletContext.contextPath }/user/login">내블로그</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
-						<li><a href="${pageContext.servletContext.contextPath }/${authUser.id}/admin/basic">블로그 관리</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+		
 		<div id="wrapper">
 			<div id="content" class="full-screen">
-				<ul class="admin-menu">
-					<li class="selected">기본설정</li>
-					<li><a href="${pageContext.servletContext.contextPath }/${authUser.id}/admin/category">카테고리</a></li>
-					<li><a href="${pageContext.servletContext.contextPath }/${authUser.id}/admin/write">글작성</a></li>
-				</ul>
+				<c:import url="/WEB-INF/views/includes/admin-menu.jsp">
+					<c:param name="menu" value="basic"/>
+				</c:import>
 				<form action="${pageContext.request.contextPath}/${authUser.id }/admin/basic" 
 					method="post" enctype="multipart/form-data">
 	 		      	<table class="admin-config">
@@ -76,11 +60,8 @@ function imgChange(){
 				</form>
 			</div>
 		</div>
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 	</div>
 </body>
 </html>
